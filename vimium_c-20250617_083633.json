@@ -1,0 +1,28 @@
+{
+	"name": "Vimium C",
+	"@time": "6/17/2025, 8:36:33 AM",
+	"time": 1750142193803,
+	"environment": {
+		"extension": "2.12.2",
+		"platform": "linux",
+		"chromium": 137
+	},
+	"keyLayout": 2,
+	"keyMappings": [
+		"#!no-check",
+		"map zi zoomIn",
+		"map zo zoomOut",
+		"map zz zoomReset",
+		"",
+		"map d removeTab",
+		""
+	],
+	"userDefinedCss": [
+		".LH, .D>.LH { background: green; font-size: 18px; }",
+		".LH { border: /*!DPI*/ 1px solid lightgreen; }",
+		"/* #omni */",
+		".s { background-color: #d8e3f3; }",
+		""
+	],
+	"vimSync": true
+}

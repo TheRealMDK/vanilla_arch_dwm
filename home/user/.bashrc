@@ -1,0 +1,211 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+source /usr/share/git/completion/git-prompt.sh
+
+PS1="\[\033[1;34m\][\u@\h \W$(__git_ps1 " (%s)")]\$\[\033[0m\] "
+setxkbmap -option caps:swapescape
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+export SUDO_PROMPT="$(tput setaf 1 bold)Please provide your sudo password:$(tput sgr0) "
+export VISUAL=nvim
+export EDITOR=nvim
+export CONFDIR="$HOME/Downloads/dwm/"
+
+shopt -s expand_aliases
+
+eval "$(starship init bash)"
+eval "$(register-python-argcomplete pipx)"
+
+alias cfg='cd $CONFDIR'
+alias ls='exa -al --color=always --group-directories-first --icons'     # preferred listing
+alias la='exa -a --color=always --group-directories-first --icons'      # all files and dirs
+alias ll='exa -l --color=always --group-directories-first --icons'      # long format
+alias lt='exa -aT --color=always --group-directories-first --icons'     # tree listing
+alias l.='exa -ald --color=always --group-directories-first --icons .*' # show only dotfiles
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias whatCmd='apropos'
+alias now="date +'  %H:%M:%S %Y/%m/%d'"
+alias take='sudo chown -R $USER:$USER'
+alias pacin='sudo pacman -S --needed'
+alias yayin='yay -S --needed'
+alias pacFind='pacman -Ss'
+alias yayFind='yay -Ss'
+alias listAllPkg='pacman -Qqe'
+alias savePkgLists="pacman -Qqe | grep -vxF -f <(pacman -Qqm) | grep -v '^yay$' > $HOME/Downloads/official_packages.txt && pacman -Qqm | grep -v '^yay$' > $HOME/Downloads/aur_packages.txt"
+alias lastBootLog='journalctl -p 3..4 --boot -o short-monotonic | uniq'
+alias off='shutdown -h now'
+alias wget='wget -c'
+alias rmPac='sudo pacman -Rns'
+alias rmAur='yay -Rns'
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='ugrep --color=auto'
+alias fgrep='ugrep -F --color=auto'
+alias egrep='ugrep -E --color=auto'
+alias gitPkg="pacman -Q | grep -i '\-git' | wc -l" # List amount of -git packages
+alias ip='ip -color'
+alias jctl='journalctl -p 3 -xb'
+alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
+alias aurUpdates='yay -Qua'
+alias pacUpdates='checkupdates'
+alias fullUpdate='yay -Syyu && sudo pacman -Syyu'
+alias memInfo='free -h --si'
+alias diskInfo='df -hT --exclude-type=tmpfs --exclude-type=devtmpfs'
+alias cpuInfo='lscpu'
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gl='git log --oneline --graph --decorate'
+alias makeExec='chmod +x'
+alias cat='bat --style header --style snip --style changes --style header'
+alias tattach='tmux attach -t'
+alias tb='nc termbin.com 9999'
+alias tdetach='tmux detach'
+alias tkill='tmux kill-session -t'
+alias tkillp='tmux kill-pane'
+alias tls='tmux ls'
+alias tnew='tmux new -s'
+alias tneww='tmux new-window'
+alias tnext='tmux next-window'
+alias tprev='tmux previous-window'
+alias tren='tmux rename-window'
+alias tresize='tmux resize-pane'
+alias tsplit-h='tmux split-window -h'
+alias tsplit-v='tmux split-window -v'
+alias tswitch='tmux select-pane'
+alias updateMirrorList='sudo reflector --verbose --latest 200 --sort rate --country za --save /etc/pacman.d/mirrorlist'
+alias viewTar='tar -tf'
+alias viewZip='unzip -l'
+alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+
+installOfficialFromList() {
+  sudo pacman -S --needed - <"$1"
+}
+
+installAurFromList() {
+  yay -S --needed - <"$1"
+}
+
+workon() {
+  source "$1/bin/activate"
+}
+
+extract() {
+
+  if [ -f "$1" ]; then
+    case "$1" in
+    *.tar.bz2) tar xjf "$1" ;;
+    *.tar.gz) tar xzf "$1" ;;
+    *.tar.xz) tar xJf "$1" ;;
+    *.bz2) bunzip2 "$1" ;;
+    *.rar) unrar x "$1" ;;
+    *.gz) gunzip "$1" ;;
+    *.tar) tar xf "$1" ;;
+    *.tbz2) tar xjf "$1" ;;
+    *.tgz) tar xzf "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.7z) 7z x "$1" ;;
+    *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+
+}
+
+cpv() {
+  if [[ -z "$1" || -z "$2" ]]; then
+    echo "Usage: cpv <source> <destination>"
+    return 1
+  fi
+
+  local src="$1"
+  local dest="$2"
+
+  if [[ ! -d "$src" ]]; then
+    echo "Error: '$src' is not a directory"
+    return 1
+  fi
+
+  local src_base
+  src_base=$(basename "$src")
+
+  tar -cf - -C "$(dirname "$src")" "$src_base" | pv | tar -xf - -C "$dest"
+}
+
+y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  IFS= read -r -d '' cwd <"$tmp"
+  [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+  rm -f -- "$tmp"
+}
+
+writeiso() {
+  # -----------------------------------------------------------------------------
+  # writeiso - Safely write a bootable ISO to a USB device using dd
+  #
+  # USAGE:
+  #   writeiso /path/to/file.iso /dev/sdX
+  #
+  # ARGUMENTS:
+  #   $1 - Path to the ISO file (e.g., ~/Downloads/archlinux-*.iso)
+  #   $2 - Target device (e.g., /dev/sdb — not a partition like /dev/sdb1)
+  #
+  # DESCRIPTION:
+  #   - Automatically unmounts all mounted partitions on the target device.
+  #   - Uses dd with optimal options for performance and safety.
+  #   - Displays progress and syncs writes to reduce corruption risk.
+  #
+  # HOW TO FIND YOUR USB DEVICE:
+  #   Run: lsblk
+  #   Look for your USB stick based on size and name.
+  #   Example output:
+  #     sdb      8:16   1   7.5G  0 disk
+  #     └─sdb1   8:17   1   7.5G  0 part /run/media/clinton/ARCH_*
+  #   In this case, the correct target is /dev/sdb
+  # -----------------------------------------------------------------------------
+
+  local ISO="$1"
+  local TARGET="$2"
+
+  if [[ -z "$ISO" || -z "$TARGET" ]]; then
+    echo "Usage: writeiso /path/to/iso /dev/sdX"
+    return 1
+  fi
+
+  if [[ ! -f "$ISO" ]]; then
+    echo "Error: ISO file not found at $ISO"
+    return 1
+  fi
+
+  if [[ ! -b "$TARGET" ]]; then
+    echo "Error: Target $TARGET is not a block device"
+    return 1
+  fi
+
+  echo "🔍 Unmounting partitions on $TARGET..."
+  for part in $(lsblk -ln "$TARGET" | awk '{print $1}'); do
+    sudo umount "/dev/$part" 2>/dev/null
+  done
+
+  echo "⚠️ Writing $ISO to $TARGET with dd..."
+  sudo dd bs=4M if="$ISO" of="$TARGET" status=progress oflag=sync
+
+  echo "✅ Done. You may now eject the device:"
+  echo "   sudo eject $TARGET"
+}

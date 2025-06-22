@@ -16,7 +16,7 @@ export NVM_DIR="$HOME/.nvm"
 export SUDO_PROMPT="$(tput setaf 1 bold)Please provide your sudo password:$(tput sgr0) "
 export VISUAL=nvim
 export EDITOR=nvim
-export CONFDIR="$HOME/Downloads/dwm/"
+export CONFDIR="$HOME/vanilla_arch_dwm/"
 
 shopt -s expand_aliases
 
@@ -43,7 +43,7 @@ alias pacFind='pacman -Ss'
 alias yayFind='yay -Ss'
 alias listAllPkg='pacman -Qqe'
 alias savePkgLists="pacman -Qqe | grep -vxF -f <(pacman -Qqm) | grep -v '^yay$' > $HOME/Downloads/official_packages.txt && pacman -Qqm | grep -v '^yay$' > $HOME/Downloads/aur_packages.txt"
-alias lastBootLog='journalctl -p 3..4 --boot -o short-monotonic | uniq'
+# alias lastBootLog='journalctl -p 3..4 --boot -o short-monotonic | uniq'
 alias off='shutdown -h now'
 alias wget='wget -c'
 alias rmPac='sudo pacman -Rns'
@@ -71,7 +71,7 @@ alias gc='git commit -m'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 alias makeExec='chmod +x'
-alias cat='bat --style header --style snip --style changes --style header'
+# alias cat='bat --style header --style snip --style changes --style header'
 alias tattach='tmux attach -t'
 alias tb='nc termbin.com 9999'
 alias tdetach='tmux detach'
@@ -87,7 +87,7 @@ alias tresize='tmux resize-pane'
 alias tsplit-h='tmux split-window -h'
 alias tsplit-v='tmux split-window -v'
 alias tswitch='tmux select-pane'
-alias updateMirrorList='sudo reflector --verbose --latest 200 --sort rate --country za --save /etc/pacman.d/mirrorlist'
+# alias updateMirrorList='sudo reflector --verbose --latest 200 --sort rate --country za --save /etc/pacman.d/mirrorlist'
 alias viewTar='tar -tf'
 alias viewZip='unzip -l'
 alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
@@ -208,4 +208,57 @@ writeiso() {
 
   echo "✅ Done. You may now eject the device:"
   echo "   sudo eject $TARGET"
+}
+
+autopatch() {
+  : '
+    autopatch <patch-file>
+
+    Attempts to apply a patch file with the correct -pN level automatically.
+    It tries -p0, -p1, and -p2 in order, and runs a dry-run patch to detect success.
+    On success, it prompts the user to confirm application before proceeding.
+
+    Usage:
+        autopatch mypatch.diff
+
+    Example:
+        autopatch dwm-scratchpads-20200414.diff
+
+    Notes:
+        - The patch must be a valid unified diff file.
+        - The function prints which levels succeed or fail for transparency.
+        - Only applies the patch after interactive confirmation.
+        - Designed for use inside git repositories or local source trees.
+    '
+  if [[ -z "$1" || ! -f "$1" ]]; then
+    echo "Usage: autopatch <patch-file>"
+    return 1
+  fi
+
+  local patchfile="$1"
+  local level
+  local success=false
+
+  for level in 0 1 2; do
+    if patch -p"$level" --dry-run <"$patchfile" >/dev/null 2>&1; then
+      echo "✅ Dry-run succeeded at -p$level"
+      success=true
+      break
+    else
+      echo "❌ Dry-run failed at -p$level"
+    fi
+  done
+
+  if ! $success; then
+    echo "✘ Patch could not be applied with -p0, -p1, or -p2"
+    return 1
+  fi
+
+  read -rp "Apply patch with -p$level? [y/N] " confirm
+  if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    patch -p"$level" <"$patchfile"
+  else
+    echo "⚠️  Patch not applied."
+    return 1
+  fi
 }

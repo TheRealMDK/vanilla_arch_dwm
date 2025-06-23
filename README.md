@@ -5,9 +5,50 @@ xinput set-prop 10 "libinput Natural Scrolling Enabled" 1
 '''
 
 '''bash
-sudo pacman -S --needed 7zip amd-ucode base-devel bash-completion bat btop expac eza fastfetch fd ffmpeg fzf gimp git glow htop hwinfo imagemagick inkscape jq lazygit libx11 libxft libxinerama man-db mesa-utils neovim noto-fonts-emoji numlockx openssh pipewire-alsa pipewire-pulse poppler pulsemixer pv python-pipx python-pynvim python-tinycss2 reflector ripgrep rsync ruby rust starship syncthing termusic thunderbird tldr tmux tree tumbler udiskie ugrep unrar unzip vulkan-radeon webkit2gtk xclip xf86-video-amdgpu xorg-server xorg-xev xorg-xinit xorg-xinput yazi
+sudo pacman -S --needed git base-devel libx11 libxft libxinerama freetype2 fontconfig neovim xorg-xinit xorg-server libx11 xorg-xinput numlockx xf86-video-amdgpu webkit2gtk xclip vulkan-radeon bash-completion bat btop cargo curl expac eza fastfetch fd feh ffmpeg fzf gimp glow go hwinfo imagemagick inkscape jq lazygit less lynx linux-headers man-db mpv noto-fonts-emoji patch pipewire-alsa pipewire-pulse pulsemixer pv python-pipx python-pynvim python-tinycss2 reflector ripgrep rsync ruby rust sed starship syncthing termusic thunderbird tldr tmux tree poppler tumbler udiskie ugrep unrar 7zip unzip yazi yt-dlp zoxide openssh xorg-xev yazi amd-ucode mesa-utils
 '''
 
 '''bash
-yay -S --needed google-chrome resvg
+yay -S --needed thorium-browser-bin resvg ani-cli ani-skip-git lobster-git
+'''
+
+'''bash
+git config --global init.defaultBranch main
+'''
+
+'''bash
+git clone <https://github.com/TheRealMDK/arch-hypr-dots.git> ~/.arch-hypr-dots
+'''
+
+'''bash
+git clone <https://github.com/TheRealMDK/vanilla_arch_dwm.git> ~/.vanilla_arch_dwm
+'''
+
+'''bash
+git clone git://git.suckless.org/dwm ~/.suckless/dwm
+'''
+
+'''bash
+git clone git://git.suckless.org/st ~/.suckless/st
+'''
+
+'''bash
+git clone git://git.suckless.org/dmenu ~/.suckless/dmenu
+'''
+
+'''bash
+git clone <https://aur.archlinux.org/yay.git>
+'''
+
+'''bash
+fc-cache -fv
+'''
+
+'''bash
+'''
+
+'''bash
+'''
+
+'''bash
 '''

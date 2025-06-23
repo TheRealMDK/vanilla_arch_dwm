@@ -102,7 +102,7 @@ PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 export SUDO_PROMPT="$(tput setaf 1 bold)Please provide your sudo password:$(tput sgr0) "
 export VISUAL=nvim
 export EDITOR=nvim
-export CONFDIR="$HOME/vanilla_arch_dwm/"
+export CONFDIR="$HOME/.vanilla_arch_dwm/"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion

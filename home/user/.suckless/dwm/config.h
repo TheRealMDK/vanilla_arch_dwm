@@ -5,8 +5,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Jetbrains Mono Nerd Font:size=10" };
-static const char dmenufont[]       = "Jetbrains Mono Nerd Font:size=10";
+static const char *fonts[]          = { "Jetbrains Mono Nerd Font:size=12" };
+static const char dmenufont[]       = "Jetbrains Mono Nerd Font:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -22,11 +22,11 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "primary", "-g", "190x40", NULL };
-const char *spcmd2[] = {"st", "-n", "secondary", "-g", "190x40", NULL };
-const char *spcmd3[] = {"st", "-n", "yazi", "-g", "190x40", "-e", "yazi", NULL };
-const char *spcmd4[] = {"st", "-n", "btop", "-g", "190x40", "-e", "btop", NULL };
-const char *spcmd5[] = {"st", "-n", "termusic", "-g", "190x40", "-e", "termusic", NULL };
+const char *spcmd1[] = {"st", "-n", "primary", "-g", "170x36", NULL };
+const char *spcmd2[] = {"st", "-n", "secondary", "-g", "170x36", NULL };
+const char *spcmd3[] = {"st", "-n", "yazi", "-g", "170x36", "-e", "yazi", NULL };
+const char *spcmd4[] = {"st", "-n", "btop", "-g", "170x36", "-e", "btop", NULL };
+const char *spcmd5[] = {"st", "-n", "termusic", "-g", "170x36", "-e", "termusic", NULL };
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"primary",      spcmd1},
@@ -56,7 +56,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {

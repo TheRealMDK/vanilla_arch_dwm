@@ -45,6 +45,29 @@ fc-cache -fv
 '''
 
 '''bash
+systemctl --user enable pipewire.service
+'''
+
+'''bash
+systemctl --user enable pipewire-pulse.service
+'''
+
+'''bash
+systemctl --user enable wireplumber.service
+'''
+
+'''bash
+eval "$(dbus-launch --sh-syntax --exit-with-session)"
+'''
+
+'''bash
+git clone <git@github.com>:TheRealMDK/vanilla_arch_dwm.git ~/.vanilla_arch_dwm
+'''
+
+'''bash
+'''
+
+'''bash
 '''
 
 '''bash

@@ -18,6 +18,8 @@ alias ...='cd ../..'
 alias ..='cd ..'
 alias cfg='cd $CONFDIR'
 alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+alias connectToDesktopLocal='ssh clinton@192.168.1.95'
+alias connectToDesktopRemote='ssh therealmdk.ddnsfree.com -p 2222'
 alias continue='ani-cli --dub -c'
 #alias continue='ani-cli --dub -c --skip'
 alias cpuInfo='lscpu'
@@ -48,6 +50,8 @@ alias ls='exa -al --color=always --group-directories-first --icons' # preferred 
 alias lt='exa -aT --color=always --group-directories-first --icons' # tree listing
 alias makeExec='chmod +x'
 alias memInfo='free -h --si'
+alias mountDesktopFsLocal="sshfs clinton@192.168.1.95:/ $HOME/TheRealMdk"
+alias mountDesktopFsRemote="sshfs -p 2222 therealmdk.ddnsfree.com:/home/clinton $HOME/TheRealMdk" #Using dynu for ddns
 alias now="date +'  %H:%M:%S %Y/%m/%d'"
 alias off='shutdown -h now'
 alias pacFind='pacman -Ss'
@@ -78,6 +82,7 @@ alias tresize='tmux resize-pane'
 alias tsplit-h='tmux split-window -h'
 alias tsplit-v='tmux split-window -v'
 alias tswitch='tmux select-pane'
+alias unmountDesktopFS="fusermount3 -u $HOME/TheRealMdk"
 alias updateMirrorList='sudo reflector --verbose --latest 200 --sort rate --country za --save /etc/pacman.d/mirrorlist'
 alias vdir='vdir --color=auto'
 alias viewTar='tar -tf'

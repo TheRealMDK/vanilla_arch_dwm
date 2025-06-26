@@ -1,0 +1,5 @@
+ani-cli
+ani-skip-git
+resvg
+thorium-browser-bin
+yay-debug
